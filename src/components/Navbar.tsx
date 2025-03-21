@@ -4,12 +4,12 @@ import { Menu, X, Lock } from 'lucide-react';
 import { GradientText } from './Animations';
 import LanguageSelector from './LanguageSelector';
 import { useLanguage } from '../context/LanguageContext';
-import { useMobile } from '../hooks/use-mobile';
+import { useIsMobile } from '../hooks/use-mobile';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
   const { t } = useLanguage();
   const isAdmin = localStorage.getItem('adminToken') === 'admin-secret-token';
 
