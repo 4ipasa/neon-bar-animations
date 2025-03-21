@@ -62,17 +62,15 @@ const Navbar: React.FC = () => {
                   </a>
                 </li>
               ))}
-              {isAdmin && (
-                <li>
-                  <a
-                    href="/admin"
-                    className="flex items-center text-neon-blue hover:text-neon-blue/80 transition-colors duration-300"
-                  >
-                    <Lock size={14} className="mr-1" />
-                    {t('admin')}
-                  </a>
-                </li>
-              )}
+              <li>
+                <a
+                  href="/admin"
+                  className="flex items-center text-neon-blue hover:text-neon-blue/80 transition-colors duration-300"
+                >
+                  <Lock size={14} className="mr-1" />
+                  {t('admin')}
+                </a>
+              </li>
             </ul>
             
             <LanguageSelector />
@@ -126,17 +124,16 @@ const Navbar: React.FC = () => {
                   </a>
                 </li>
               ))}
-              {isAdmin && (
-                <li>
-                  <a
-                    href="/admin"
-                    className="flex items-center text-xl text-neon-blue hover:text-neon-blue/80 transition-colors duration-300"
-                  >
-                    <Lock size={16} className="mr-2" />
-                    {t('admin')}
-                  </a>
-                </li>
-              )}
+              <li>
+                <a
+                  href="/admin"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center justify-center text-xl text-neon-blue hover:text-neon-blue/80 transition-colors duration-300"
+                >
+                  <Lock size={16} className="mr-2" />
+                  {t('admin')}
+                </a>
+              </li>
               <li className="mt-4">
                 <a
                   href="#contact"
