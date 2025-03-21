@@ -2,8 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { GradientText } from './Animations';
+import LanguageSelector from './LanguageSelector';
+import { useLanguage } from '../context/LanguageContext';
 
 const Navbar: React.FC = () => {
+  const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
@@ -33,45 +36,59 @@ const Navbar: React.FC = () => {
         </a>
         
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-10">
-          {['home', 'menu', 'about', 'contact'].map((item) => (
+        <nav className="hidden md:flex items-center space-x-8">
+          {[
+            { id: 'home', label: t('home') },
+            { id: 'menu', label: t('menu') },
+            { id: 'about', label: t('about') },
+            { id: 'contact', label: t('contact') },
+          ].map((item) => (
             <a
-              key={item}
-              href={`#${item}`}
+              key={item.id}
+              href={`#${item.id}`}
               className="text-white/80 hover:text-neon-blue transition-colors duration-300 uppercase tracking-wider text-sm font-medium"
             >
-              {item}
+              {item.label}
             </a>
           ))}
           <a
             href="#contact"
             className="px-6 py-2 bg-bar-light border border-neon-blue/30 rounded-md text-neon-blue hover:bg-neon-blue/10 transition-colors duration-300"
           >
-            RESERVE
+            {t('reserve')}
           </a>
+          <LanguageSelector />
         </nav>
         
         {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="relative z-10 md:hidden text-white/80 hover:text-white transition-colors"
-          aria-label="Toggle Menu"
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center space-x-4 md:hidden">
+          <LanguageSelector />
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="relative z-10 text-white/80 hover:text-white transition-colors"
+            aria-label="Toggle Menu"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
       
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 bg-bar-black/95 backdrop-blur-lg md:hidden flex flex-col justify-center items-center gap-10 px-6 py-20 z-0">
-          {['home', 'menu', 'about', 'contact'].map((item) => (
+          {[
+            { id: 'home', label: t('home') },
+            { id: 'menu', label: t('menu') },
+            { id: 'about', label: t('about') },
+            { id: 'contact', label: t('contact') },
+          ].map((item) => (
             <a
-              key={item}
-              href={`#${item}`}
+              key={item.id}
+              href={`#${item.id}`}
               className="text-white/80 hover:text-neon-blue transition-colors duration-300 uppercase tracking-wider text-xl font-medium"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              {item}
+              {item.label}
             </a>
           ))}
           <a
@@ -79,7 +96,7 @@ const Navbar: React.FC = () => {
             className="mt-6 px-8 py-3 bg-bar-light border border-neon-blue/30 rounded-md text-neon-blue hover:bg-neon-blue/10 transition-colors duration-300"
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            RESERVE NOW
+            {t('reserve_now')}
           </a>
         </div>
       )}

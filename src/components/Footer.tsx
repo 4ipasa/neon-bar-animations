@@ -2,8 +2,11 @@
 import React from 'react';
 import { GradientText } from './Animations';
 import { Heart } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const Footer: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-bar-darker py-16 relative">
       {/* Background Effect */}
@@ -22,7 +25,7 @@ const Footer: React.FC = () => {
               </h1>
             </a>
             <p className="text-white/60 text-sm mb-4">
-              An exclusive cocktail experience with expertly crafted drinks and unforgettable atmosphere.
+              {t('premium_experience_desc')}
             </p>
             <div className="flex space-x-4">
               {['instagram', 'facebook', 'twitter'].map((social, index) => (
@@ -45,15 +48,21 @@ const Footer: React.FC = () => {
           
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-medium mb-4">Quick Links</h4>
+            <h4 className="text-lg font-medium mb-4">{t('quick_links')}</h4>
             <ul className="space-y-2">
-              {['Home', 'Menu', 'About Us', 'Contact', 'Reservations'].map((link, index) => (
+              {[
+                { id: 'home', label: t('home_link') },
+                { id: 'menu', label: t('menu_link') },
+                { id: 'about', label: t('about_us') },
+                { id: 'contact', label: t('contact_link') },
+                { id: 'contact', label: t('reservations') }
+              ].map((link, index) => (
                 <li key={index}>
                   <a
-                    href={`#${link.toLowerCase().replace(' ', '')}`}
+                    href={`#${link.id}`}
                     className="text-white/70 hover:text-neon-blue transition-colors duration-300 text-sm"
                   >
-                    {link}
+                    {link.label}
                   </a>
                 </li>
               ))}
@@ -62,7 +71,7 @@ const Footer: React.FC = () => {
           
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-medium mb-4">Contact</h4>
+            <h4 className="text-lg font-medium mb-4">{t('contact')}</h4>
             <address className="not-italic text-white/70 text-sm space-y-2">
               <p>123 Nightlife Street</p>
               <p>Downtown, New York</p>
@@ -74,23 +83,23 @@ const Footer: React.FC = () => {
           
           {/* Opening Hours */}
           <div>
-            <h4 className="text-lg font-medium mb-4">Opening Hours</h4>
+            <h4 className="text-lg font-medium mb-4">{t('opening_hours')}</h4>
             <ul className="text-white/70 text-sm space-y-2">
               <li className="flex justify-between">
-                <span>Monday</span>
-                <span>Closed</span>
+                <span>{t('monday')}</span>
+                <span>{t('closed')}</span>
               </li>
               <li className="flex justify-between">
-                <span>Tuesday - Thursday</span>
-                <span>6PM - 1AM</span>
+                <span>{t('tuesday_thursday')}</span>
+                <span>18:00 - 01:00</span>
               </li>
               <li className="flex justify-between">
-                <span>Friday - Saturday</span>
-                <span>6PM - 3AM</span>
+                <span>{t('friday_saturday')}</span>
+                <span>18:00 - 03:00</span>
               </li>
               <li className="flex justify-between">
-                <span>Sunday</span>
-                <span>6PM - 12AM</span>
+                <span>{t('sunday')}</span>
+                <span>18:00 - 00:00</span>
               </li>
             </ul>
           </div>
@@ -98,9 +107,9 @@ const Footer: React.FC = () => {
         
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-sm text-white/50">
-          <p>© 2023 Neon Bar. All rights reserved.</p>
+          <p>{t('rights_reserved')}</p>
           <p className="mt-2 md:mt-0 flex items-center">
-            Crafted with <Heart size={14} className="mx-1 text-neon-pink" /> for cocktail enthusiasts
+            {t('crafted_with_love')} <Heart size={14} className="mx-1 text-neon-pink" />
           </p>
         </div>
       </div>

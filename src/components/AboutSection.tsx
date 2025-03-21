@@ -2,9 +2,11 @@
 import React from 'react';
 import { Wine, Award, Music } from 'lucide-react';
 import { useRevealAnimation, GradientText } from './Animations';
+import { useLanguage } from '../context/LanguageContext';
 
 const AboutSection: React.FC = () => {
   const { addToRefs } = useRevealAnimation();
+  const { t } = useLanguage();
 
   return (
     <section id="about" className="section-padding bg-bar-darker relative">
@@ -19,33 +21,33 @@ const AboutSection: React.FC = () => {
           {/* Text Content */}
           <div className="lg:order-2">
             <div ref={(el) => addToRefs(el as HTMLElement)}>
-              <p className="text-white/60 uppercase tracking-wider mb-3">Our Story</p>
+              <p className="text-white/60 uppercase tracking-wider mb-3">{t('our_story')}</p>
             </div>
             
             <div ref={(el) => addToRefs(el as HTMLElement)}>
               <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                The <GradientText>Art</GradientText> of Perfect Cocktails
+                {t('art_of_perfect_cocktails').split(' ')[0]} <GradientText>{t('art_of_perfect_cocktails').split(' ').slice(1).join(' ')}</GradientText>
               </h2>
             </div>
             
             <div ref={(el) => addToRefs(el as HTMLElement)}>
               <p className="text-white/70 mb-6 leading-relaxed">
-                Founded in 2015, Neon Bar has established itself as a premier destination for cocktail enthusiasts and connoisseurs. What started as a passion project of two mixologists has evolved into one of the city's most vibrant nightlife spots.
+                {t('founded_story')}
               </p>
             </div>
             
             <div ref={(el) => addToRefs(el as HTMLElement)}>
               <p className="text-white/70 mb-8 leading-relaxed">
-                Our master mixologists blend traditional techniques with innovative approaches, creating signature cocktails that are as visually stunning as they are delicious. We source only the finest spirits and freshest ingredients to ensure an unforgettable experience with every sip.
+                {t('mixologists_blend')}
               </p>
             </div>
             
             {/* Features */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
               {[
-                { icon: <Wine size={24} className="text-neon-blue" />, title: "Craft Mixology", desc: "Expertly crafted unique cocktails" },
-                { icon: <Award size={24} className="text-neon-purple" />, title: "Award Winning", desc: "Recognized for excellence" },
-                { icon: <Music size={24} className="text-neon-pink" />, title: "Live Music", desc: "Weekend performances" }
+                { icon: <Wine size={24} className="text-neon-blue" />, title: t('craft_mixology'), desc: t('expertly_crafted_unique') },
+                { icon: <Award size={24} className="text-neon-purple" />, title: t('award_winning'), desc: t('recognized_excellence') },
+                { icon: <Music size={24} className="text-neon-pink" />, title: t('live_music'), desc: t('weekend_performances') }
               ].map((feature, index) => (
                 <div
                   key={index}
@@ -65,7 +67,7 @@ const AboutSection: React.FC = () => {
                 href="#contact"
                 className="inline-flex items-center text-neon-blue hover:text-neon-purple transition-colors duration-300"
               >
-                <span className="mr-2 font-medium">Visit Us Today</span>
+                <span className="mr-2 font-medium">{t('visit_us_today')}</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                 </svg>

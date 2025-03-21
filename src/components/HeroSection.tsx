@@ -2,9 +2,11 @@
 import React, { useEffect, useRef } from 'react';
 import { Martini, Clock, MapPin } from 'lucide-react';
 import { NeonGlow, useRevealAnimation, GradientText } from './Animations';
+import { useLanguage } from '../context/LanguageContext';
 
 const HeroSection: React.FC = () => {
   const { addToRefs } = useRevealAnimation();
+  const { t } = useLanguage();
   const videoRef = useRef<HTMLVideoElement>(null);
   
   useEffect(() => {
@@ -35,19 +37,19 @@ const HeroSection: React.FC = () => {
       {/* Content */}
       <div className="container relative z-20 px-6 md:px-12 pt-24 pb-12 flex flex-col items-center justify-center text-center">
         <div ref={(el) => addToRefs(el as HTMLElement)} className="delay-100">
-          <h3 className="text-white/80 uppercase tracking-[0.2em] mb-4 text-sm md:text-base">Premium Cocktail Experience</h3>
+          <h3 className="text-white/80 uppercase tracking-[0.2em] mb-4 text-sm md:text-base">{t('premium_cocktail_experience')}</h3>
         </div>
         
         <div ref={(el) => addToRefs(el as HTMLElement)} className="delay-300">
           <h1 className="mb-6 md:mb-8 text-5xl md:text-7xl font-bold leading-tight">
-            Discover the Art of <br />
-            <GradientText>Mixology</GradientText>
+            {t('discover_art_of_mixology').split(' ').slice(0, -1).join(' ')} <br />
+            <GradientText>{t('discover_art_of_mixology').split(' ').slice(-1)[0]}</GradientText>
           </h1>
         </div>
         
         <div ref={(el) => addToRefs(el as HTMLElement)} className="delay-500">
           <p className="text-white/70 text-lg md:text-xl max-w-2xl mb-10 md:mb-12">
-            Immerse yourself in a world of exquisite flavors and craftsmanship at our premium cocktail destination
+            {t('immerse_yourself')}
           </p>
         </div>
         
@@ -58,14 +60,14 @@ const HeroSection: React.FC = () => {
                 href="#menu" 
                 className="px-6 py-3 md:px-8 md:py-4 bg-bar-black border border-neon-blue/30 rounded-md text-white hover:bg-neon-blue/10 transition-all duration-300 text-sm md:text-base uppercase tracking-wider font-medium"
               >
-                Explore Our Menu
+                {t('explore_our_menu')}
               </a>
             </NeonGlow>
             <a 
               href="#contact" 
               className="px-6 py-3 md:px-8 md:py-4 bg-transparent border border-white/30 rounded-md text-white hover:bg-white/10 transition-all duration-300 text-sm md:text-base uppercase tracking-wider font-medium"
             >
-              Reserve a Table
+              {t('reserve_a_table')}
             </a>
           </div>
         </div>
@@ -73,9 +75,9 @@ const HeroSection: React.FC = () => {
         {/* Info Cards */}
         <div className="mt-20 md:mt-32 grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
           {[
-            { icon: <Martini className="text-neon-blue" size={24} />, title: "Craft Cocktails", desc: "Expertly crafted signature drinks" },
-            { icon: <Clock className="text-neon-purple" size={24} />, title: "Happy Hours", desc: "Tue-Fri, 5PM - 8PM" },
-            { icon: <MapPin className="text-neon-pink" size={24} />, title: "Find Us", desc: "123 Nightlife Street" }
+            { icon: <Martini className="text-neon-blue" size={24} />, title: t('craft_cocktails'), desc: t('expertly_crafted') },
+            { icon: <Clock className="text-neon-purple" size={24} />, title: t('happy_hours'), desc: t('happy_hours_time') },
+            { icon: <MapPin className="text-neon-pink" size={24} />, title: t('find_us'), desc: t('nightlife_street') }
           ].map((item, index) => (
             <div 
               key={index}
@@ -92,7 +94,7 @@ const HeroSection: React.FC = () => {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center">
-        <span className="text-white/50 text-xs mb-2 uppercase tracking-wider">Scroll</span>
+        <span className="text-white/50 text-xs mb-2 uppercase tracking-wider">{t('scroll')}</span>
         <div className="w-5 h-10 border border-white/20 rounded-full flex justify-center p-1">
           <div className="w-1 h-2 bg-white/50 rounded-full animate-bounce"></div>
         </div>

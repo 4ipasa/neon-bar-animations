@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { GradientText } from './Animations';
+import { useLanguage } from '../context/LanguageContext';
 
 interface CocktailCardProps {
   title: string;
@@ -20,6 +21,7 @@ const CocktailCard: React.FC<CocktailCardProps> = ({
   featured = false,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <div
@@ -51,7 +53,7 @@ const CocktailCard: React.FC<CocktailCardProps> = ({
           {/* Featured tag */}
           {featured && (
             <div className="absolute top-4 right-4 bg-neon-blue/10 backdrop-blur-sm border border-neon-blue/30 px-3 py-1 rounded-full text-xs text-neon-blue uppercase tracking-wider">
-              Featured
+              {t('featured')}
             </div>
           )}
         </div>
@@ -69,7 +71,7 @@ const CocktailCard: React.FC<CocktailCardProps> = ({
           {/* Button */}
           <div className={`mt-6 self-start transition-all duration-500 opacity-0 -translate-y-2 ${isHovered ? 'opacity-100 translate-y-0' : ''}`}>
             <button className="px-4 py-2 text-xs md:text-sm bg-neon-blue/10 border border-neon-blue/30 rounded text-neon-blue hover:bg-neon-blue/20 transition-colors uppercase tracking-wider">
-              Order Now
+              {t('order_now')}
             </button>
           </div>
         </div>

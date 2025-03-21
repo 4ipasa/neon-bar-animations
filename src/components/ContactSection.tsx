@@ -2,9 +2,11 @@
 import React, { useState } from 'react';
 import { MapPin, Clock, Phone, Mail, Send } from 'lucide-react';
 import { useRevealAnimation, GradientText, NeonGlow } from './Animations';
+import { useLanguage } from '../context/LanguageContext';
 
 const ContactSection: React.FC = () => {
   const { addToRefs } = useRevealAnimation();
+  const { t } = useLanguage();
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -45,16 +47,16 @@ const ContactSection: React.FC = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <div ref={(el) => addToRefs(el as HTMLElement)}>
-            <p className="text-white/60 uppercase tracking-wider mb-3">Get in touch</p>
+            <p className="text-white/60 uppercase tracking-wider mb-3">{t('get_in_touch')}</p>
           </div>
           <div ref={(el) => addToRefs(el as HTMLElement)}>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <GradientText>Reserve</GradientText> Your Experience
+              <GradientText>{t('reserve_your_experience').split(' ')[0]}</GradientText> {t('reserve_your_experience').split(' ').slice(1).join(' ')}
             </h2>
           </div>
           <div ref={(el) => addToRefs(el as HTMLElement)}>
             <p className="max-w-2xl mx-auto text-white/70 text-lg">
-              Book your table or private event with us and enjoy a memorable evening of exceptional cocktails and ambiance.
+              {t('book_table_message')}
             </p>
           </div>
         </div>
@@ -63,15 +65,15 @@ const ContactSection: React.FC = () => {
           {/* Contact Info */}
           <div className="lg:col-span-2">
             <div ref={(el) => addToRefs(el as HTMLElement)} className="glass-card p-8 h-full">
-              <h3 className="text-2xl font-semibold mb-6">Visit Us</h3>
+              <h3 className="text-2xl font-semibold mb-6">{t('visit_us')}</h3>
               
               {/* Contact Items */}
               <div className="space-y-6 mb-8">
                 {[
-                  { icon: <MapPin size={20} className="text-neon-blue" />, title: "Address", content: "123 Nightlife Street, Downtown, New York, NY 10001" },
-                  { icon: <Clock size={20} className="text-neon-purple" />, title: "Opening Hours", content: "Tue-Thu: 6PM - 1AM\nFri-Sat: 6PM - 3AM\nSun: 6PM - 12AM" },
-                  { icon: <Phone size={20} className="text-neon-pink" />, title: "Phone", content: "+1 (555) 123-4567" },
-                  { icon: <Mail size={20} className="text-neon-blue" />, title: "Email", content: "reservations@neonbar.com" }
+                  { icon: <MapPin size={20} className="text-neon-blue" />, title: t('address'), content: t('address_full') },
+                  { icon: <Clock size={20} className="text-neon-purple" />, title: t('opening_hours'), content: t('opening_hours_full') },
+                  { icon: <Phone size={20} className="text-neon-pink" />, title: t('phone'), content: "+1 (555) 123-4567" },
+                  { icon: <Mail size={20} className="text-neon-blue" />, title: t('email'), content: "reservations@neonbar.com" }
                 ].map((item, index) => (
                   <div key={index} className="flex items-start">
                     <div className="mr-4 mt-1">{item.icon}</div>
@@ -85,7 +87,7 @@ const ContactSection: React.FC = () => {
               
               {/* Social Media */}
               <div>
-                <h4 className="text-white text-sm font-medium mb-3">Follow Us</h4>
+                <h4 className="text-white text-sm font-medium mb-3">{t('follow_us')}</h4>
                 <div className="flex space-x-4">
                   {['instagram', 'facebook', 'twitter'].map((social, index) => (
                     <a
@@ -123,14 +125,14 @@ const ContactSection: React.FC = () => {
             
             {/* Reservation Form */}
             <div ref={(el) => addToRefs(el as HTMLElement)} className="glass-card p-8">
-              <h3 className="text-2xl font-semibold mb-6">Make a Reservation</h3>
+              <h3 className="text-2xl font-semibold mb-6">{t('make_reservation')}</h3>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Name */}
                   <div>
                     <label htmlFor="name" className="block text-white/80 text-sm mb-2">
-                      Name
+                      {t('name')}
                     </label>
                     <input
                       type="text"
@@ -140,14 +142,14 @@ const ContactSection: React.FC = () => {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 bg-bar-light/50 border border-white/10 rounded-md text-white focus:outline-none focus:border-neon-blue/50 transition-colors"
-                      placeholder="Your name"
+                      placeholder={t('your_name')}
                     />
                   </div>
                   
                   {/* Email */}
                   <div>
                     <label htmlFor="email" className="block text-white/80 text-sm mb-2">
-                      Email
+                      {t('email')}
                     </label>
                     <input
                       type="email"
@@ -157,14 +159,14 @@ const ContactSection: React.FC = () => {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 bg-bar-light/50 border border-white/10 rounded-md text-white focus:outline-none focus:border-neon-blue/50 transition-colors"
-                      placeholder="Your email"
+                      placeholder={t('your_email')}
                     />
                   </div>
                   
                   {/* Date */}
                   <div>
                     <label htmlFor="date" className="block text-white/80 text-sm mb-2">
-                      Date
+                      {t('date')}
                     </label>
                     <input
                       type="date"
@@ -180,7 +182,7 @@ const ContactSection: React.FC = () => {
                   {/* Time */}
                   <div>
                     <label htmlFor="time" className="block text-white/80 text-sm mb-2">
-                      Time
+                      {t('time')}
                     </label>
                     <input
                       type="time"
@@ -196,7 +198,7 @@ const ContactSection: React.FC = () => {
                   {/* Guests */}
                   <div>
                     <label htmlFor="guests" className="block text-white/80 text-sm mb-2">
-                      Number of Guests
+                      {t('number_of_guests')}
                     </label>
                     <select
                       id="guests"
@@ -206,16 +208,16 @@ const ContactSection: React.FC = () => {
                       className="w-full px-4 py-3 bg-bar-light/50 border border-white/10 rounded-md text-white focus:outline-none focus:border-neon-blue/50 transition-colors"
                     >
                       {[1, 2, 3, 4, 5, 6, 7, 8].map(num => (
-                        <option key={num} value={num}>{num} {num === 1 ? 'person' : 'people'}</option>
+                        <option key={num} value={num}>{num} {num === 1 ? t('person') : t('people')}</option>
                       ))}
-                      <option value="9+">9+ people</option>
+                      <option value="9+">9+ {t('people')}</option>
                     </select>
                   </div>
                   
                   {/* Special Request */}
                   <div className="md:col-span-2">
                     <label htmlFor="message" className="block text-white/80 text-sm mb-2">
-                      Special Request (Optional)
+                      {t('special_request')}
                     </label>
                     <textarea
                       id="message"
@@ -224,7 +226,7 @@ const ContactSection: React.FC = () => {
                       onChange={handleChange}
                       rows={4}
                       className="w-full px-4 py-3 bg-bar-light/50 border border-white/10 rounded-md text-white focus:outline-none focus:border-neon-blue/50 transition-colors"
-                      placeholder="Any special requests?"
+                      placeholder={t('any_special_requests')}
                     ></textarea>
                   </div>
                 </div>
@@ -236,7 +238,7 @@ const ContactSection: React.FC = () => {
                       type="submit"
                       className="w-full px-6 py-3 bg-bar-black border border-neon-blue/30 rounded-md text-white hover:bg-neon-blue/10 transition-all duration-300 flex items-center justify-center"
                     >
-                      <span className="mr-2">Reserve Now</span>
+                      <span className="mr-2">{t('reserve_now')}</span>
                       <Send size={18} />
                     </button>
                   </NeonGlow>
