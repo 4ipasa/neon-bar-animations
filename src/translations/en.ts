@@ -7,6 +7,7 @@ export const translationsEn: Record<string, string> = {
   'contact': 'Contact',
   'reserve': 'Reserve',
   'reserve_now': 'Reserve Now',
+  'admin': 'Admin',
 
   // Hero Section
   'premium_cocktail_experience': 'Premium Cocktail Experience',
@@ -34,6 +35,7 @@ export const translationsEn: Record<string, string> = {
   'view_full_menu': 'View Full Menu',
   'featured': 'Featured',
   'order_now': 'Order Now',
+  'edit_menu': 'Edit Menu',
 
   // About Section
   'our_story': 'Our Story',
@@ -80,7 +82,6 @@ export const translationsEn: Record<string, string> = {
   'about_us': 'About Us',
   'contact_link': 'Contact',
   'reservations': 'Reservations',
-  'contact': 'Contact',
   'monday': 'Monday',
   'closed': 'Closed',
   'tuesday_thursday': 'Tuesday - Thursday',
@@ -98,4 +99,49 @@ export const translationsEn: Record<string, string> = {
   // 404 Page
   'page_not_found': 'This page doesn\'t exist or has been moved.',
   'return_to_home': 'Return to Home',
+  
+  // Admin Panel
+  'admin_panel': 'Admin Panel',
+  'view_site': 'View Site',
+  'logout': 'Logout',
+  'cocktails': 'Cocktails',
+  'site_content': 'Site Content',
+  'settings': 'Settings',
+  'content_management_coming_soon': 'Content management features coming soon.',
+  'settings_coming_soon': 'Settings features coming soon.',
+  'manage_cocktails': 'Manage Cocktails',
+  'add_cocktail': 'Add Cocktail',
+  'edit_cocktail': 'Edit Cocktail',
+  'search_cocktails': 'Search cocktails...',
+  'cocktail': 'Cocktail',
+  'category': 'Category',
+  'price': 'Price',
+  'actions': 'Actions',
+  'no_cocktails_found': 'No cocktails found matching your search.',
+  'no_cocktails_yet': 'No cocktails added yet.',
+  'image_url': 'Image URL',
+  'title': 'Title',
+  'ingredients': 'Ingredients',
+  'save': 'Save',
+  'cancel': 'Cancel',
+  'confirm_delete': 'Confirm Delete',
+  'delete_cocktail_confirmation': 'Are you sure you want to delete this cocktail? This action cannot be undone.',
+  'delete': 'Delete',
+  'cocktail_added': 'Cocktail added successfully!',
+  'cocktail_updated': 'Cocktail updated successfully!',
+  'cocktail_deleted': 'Cocktail deleted successfully!',
+  
+  // Admin Login
+  'admin_login': 'Admin Login',
+  'admin_login_message': 'Enter your credentials to access the admin panel.',
+  'username': 'Username',
+  'password': 'Password',
+  'enter_username': 'Enter username',
+  'enter_password': 'Enter password',
+  'login': 'Login',
+  'logging_in': 'Logging in...',
+  'return_to_site': 'Return to site',
+  'login_successful': 'Login successful!',
+  'invalid_credentials': 'Invalid username or password.',
+  'admin_credentials_hint': 'Demo credentials: username: admin, password: password'
 };
