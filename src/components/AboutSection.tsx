@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Cocktail, Award, Music } from 'lucide-react';
+import { Wine, Award, Music } from 'lucide-react';
 import { useRevealAnimation, GradientText } from './Animations';
 
 const AboutSection: React.FC = () => {
@@ -43,7 +43,7 @@ const AboutSection: React.FC = () => {
             {/* Features */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
               {[
-                { icon: <Cocktail size={24} className="text-neon-blue" />, title: "Craft Mixology", desc: "Expertly crafted unique cocktails" },
+                { icon: <Wine size={24} className="text-neon-blue" />, title: "Craft Mixology", desc: "Expertly crafted unique cocktails" },
                 { icon: <Award size={24} className="text-neon-purple" />, title: "Award Winning", desc: "Recognized for excellence" },
                 { icon: <Music size={24} className="text-neon-pink" />, title: "Live Music", desc: "Weekend performances" }
               ].map((feature, index) => (
