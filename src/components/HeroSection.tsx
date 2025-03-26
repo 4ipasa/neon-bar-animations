@@ -1,17 +1,36 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Martini, Clock, MapPin } from 'lucide-react';
 import { NeonGlow, useRevealAnimation, GradientText } from './Animations';
 import { useLanguage } from '../context/LanguageContext';
+
+// Default hero content
+const DEFAULT_HERO_CONTENT = {
+  title: "NEON BAR",
+  subtitle: "Premium Cocktail Experience",
+  description: "Experience the art of mixology in a vibrant atmosphere where every drink tells a story",
+  buttonText: "Explore Menu"
+};
 
 const HeroSection: React.FC = () => {
   const { addToRefs } = useRevealAnimation();
   const { t } = useLanguage();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [heroContent, setHeroContent] = useState(DEFAULT_HERO_CONTENT);
   
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.playbackRate = 0.7;
+    }
+    
+    // Load hero content from localStorage
+    try {
+      const storedHeroContent = localStorage.getItem('heroContent');
+      if (storedHeroContent) {
+        setHeroContent(JSON.parse(storedHeroContent));
+      }
+    } catch (error) {
+      console.error("Error loading hero content:", error);
     }
   }, []);
 
@@ -37,18 +56,18 @@ const HeroSection: React.FC = () => {
       {/* Content */}
       <div className="container relative z-20 px-6 md:px-12 pt-24 pb-12 flex flex-col items-center justify-center text-center">
         <div ref={(el) => addToRefs(el as HTMLElement)} className="delay-100">
-          <h3 className="text-white/80 uppercase tracking-[0.2em] mb-4 text-sm md:text-base">{t('premium_cocktail_experience')}</h3>
+          <h3 className="text-white/80 uppercase tracking-[0.2em] mb-4 text-sm md:text-base">{heroContent.subtitle}</h3>
         </div>
         
         <div ref={(el) => addToRefs(el as HTMLElement)} className="delay-300">
           <h1 className="mb-6 md:mb-8 text-5xl md:text-7xl font-bold leading-tight">
-            {t('discover_art_of_mixology')}
+            {heroContent.title}
           </h1>
         </div>
         
         <div ref={(el) => addToRefs(el as HTMLElement)} className="delay-500">
           <p className="text-white/70 text-lg md:text-xl max-w-2xl mb-10 md:mb-12">
-            {t('immerse_yourself')}
+            {heroContent.description}
           </p>
         </div>
         
@@ -59,7 +78,7 @@ const HeroSection: React.FC = () => {
                 href="#menu" 
                 className="px-6 py-3 md:px-8 md:py-4 bg-bar-black border border-neon-blue/30 rounded-md text-white hover:bg-neon-blue/10 transition-all duration-300 text-sm md:text-base uppercase tracking-wider font-medium"
               >
-                {t('explore_our_menu')}
+                {heroContent.buttonText}
               </a>
             </NeonGlow>
             <a 
