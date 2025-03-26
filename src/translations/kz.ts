@@ -128,5 +128,50 @@ export const kzTranslations = {
   happy_hours_time: "Күн сайын 18:00-ден 20:00-ге дейін",
   find_us: "Бізді табыңыз",
   nightlife_street: "Түнгі өмір көшесі 123, Қала орталығы",
-  scroll: "Төмен қарай жылжу"
+  scroll: "Төмен қарай жылжу",
+  
+  // Contact section
+  get_in_touch: "Бізбен байланысыңыз",
+  reserve_your_experience: "Сіздің тәжірибеңізді сақтаңыз",
+  book_table_message: "Ерекше коктейльдер мен жарқын атмосферада ұмытылмас кешкі асқа үстел брондаңыз.",
+  visit_us: "Бізге келіңіз",
+  address_full: "Түнгі өмір көшесі 123,\nҚала орталығы, Нью-Йорк,\nNY 10001",
+  opening_hours_full: "Дүйсенбі: Жабық\nСейсенбі-Бейсенбі: 18:00-01:00\nЖұма-Сенбі: 18:00-03:00\nЖексенбі: 18:00-00:00",
+  follow_us: "Бізді бақылаңыз",
+  make_reservation: "Брондау жасау",
+  name: "Аты-жөні",
+  your_name: "Сіздің атыңыз",
+  your_email: "Сіздің электрондық поштаңыз",
+  date: "Күні",
+  time: "Уақыты",
+  number_of_guests: "Қонақтар саны",
+  person: "Адам",
+  people: "Адам",
+  special_request: "Арнайы сұраныс",
+  any_special_requests: "Қандай да бір арнайы сұраныстар немесе қалаулар?",
+  
+  // Footer
+  premium_experience_desc: "Қаланың жүрегінде ерекше сусындар мен атмосфера ұсынатын премиум коктейль-бар.",
+  quick_links: "Жылдам сілтемелер",
+  home_link: "Басты бет",
+  menu_link: "Мәзір",
+  about_us: "Біз туралы",
+  contact_link: "Байланыс",
+  reservations: "Брондау",
+  rights_reserved: "© 2023 Neon Bar. Барлық құқықтар қорғалған.",
+  crafted_with_love: "Сүйіспеншілікпен жасалған",
+  
+  // Working hours admin
+  monday: "Дүйсенбі",
+  tuesday: "Сейсенбі",
+  wednesday: "Сәрсенбі",
+  thursday: "Бейсенбі",
+  friday: "Жұма",
+  saturday: "Сенбі",
+  sunday: "Жексенбі",
+  open: "Ашық",
+  closed: "Жабық",
+  opening_hours: "Жұмыс уақыты",
+  tuesday_thursday: "Сейсенбі-Бейсенбі",
+  friday_saturday: "Жұма-Сенбі"
 };

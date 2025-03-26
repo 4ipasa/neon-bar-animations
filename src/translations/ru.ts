@@ -128,5 +128,50 @@ export const ruTranslations = {
   happy_hours_time: "Каждый день с 18:00 до 20:00",
   find_us: "Найти нас",
   nightlife_street: "ул. Ночная жизнь 123, Центр города",
-  scroll: "Прокрутить"
+  scroll: "Прокрутить",
+  
+  // Contact section
+  get_in_touch: "Свяжитесь с нами",
+  reserve_your_experience: "Забронируйте ваш опыт",
+  book_table_message: "Забронируйте столик для незабываемого вечера с исключительными коктейлями и яркой атмосферой.",
+  visit_us: "Посетите нас",
+  address_full: "ул. Ночная жизнь 123,\nЦентр города, Нью-Йорк,\nNY 10001",
+  opening_hours_full: "Понедельник: Закрыто\nВторник-Четверг: 18:00-01:00\nПятница-Суббота: 18:00-03:00\nВоскресенье: 18:00-00:00",
+  follow_us: "Подписывайтесь на нас",
+  make_reservation: "Сделать бронирование",
+  name: "Имя",
+  your_name: "Ваше имя",
+  your_email: "Ваш email",
+  date: "Дата",
+  time: "Время",
+  number_of_guests: "Количество гостей",
+  person: "Человек",
+  people: "Человек",
+  special_request: "Особые пожелания",
+  any_special_requests: "Какие-либо особые пожелания или предпочтения?",
+  
+  // Footer
+  premium_experience_desc: "Премиум коктейль-бар, предлагающий исключительные напитки и атмосферу в самом сердце города.",
+  quick_links: "Быстрые ссылки",
+  home_link: "Главная",
+  menu_link: "Меню",
+  about_us: "О нас",
+  contact_link: "Контакты",
+  reservations: "Бронирование",
+  rights_reserved: "© 2023 Neon Bar. Все права защищены.",
+  crafted_with_love: "Создано с",
+  
+  // Working hours admin
+  monday: "Понедельник",
+  tuesday: "Вторник",
+  wednesday: "Среда",
+  thursday: "Четверг",
+  friday: "Пятница",
+  saturday: "Суббота",
+  sunday: "Воскресенье",
+  open: "Открыто",
+  closed: "Закрыто",
+  opening_hours: "Часы работы",
+  tuesday_thursday: "Вторник-Четверг",
+  friday_saturday: "Пятница-Суббота"
 };

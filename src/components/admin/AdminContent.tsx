@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
@@ -29,11 +29,36 @@ const AdminContent: React.FC = () => {
     address: "123 Nightlife Avenue, City Center",
     phone: "+1 (555) 123-4567",
     email: "info@neonbar.com",
-    hours: "Monday-Sunday: 6 PM - 2 AM"
+    hours: {
+      monday: { isOpen: false, start: "18:00", end: "01:00" },
+      tuesday: { isOpen: true, start: "18:00", end: "01:00" },
+      wednesday: { isOpen: true, start: "18:00", end: "01:00" },
+      thursday: { isOpen: true, start: "18:00", end: "01:00" },
+      friday: { isOpen: true, start: "18:00", end: "03:00" },
+      saturday: { isOpen: true, start: "18:00", end: "03:00" },
+      sunday: { isOpen: true, start: "18:00", end: "00:00" }
+    }
   });
+
+  // Load stored data on component mount
+  useEffect(() => {
+    const storedHeroContent = localStorage.getItem('heroContent');
+    if (storedHeroContent) {
+      setHeroContent(JSON.parse(storedHeroContent));
+    }
+
+    const storedAboutContent = localStorage.getItem('aboutContent');
+    if (storedAboutContent) {
+      setAboutContent(JSON.parse(storedAboutContent));
+    }
+
+    const storedContactContent = localStorage.getItem('contactContent');
+    if (storedContactContent) {
+      setContactContent(JSON.parse(storedContactContent));
+    }
+  }, []);
   
   const handleSaveHero = () => {
-    // Here you would typically save to a database or localStorage
     localStorage.setItem('heroContent', JSON.stringify(heroContent));
     toast.success(t('hero_content_saved'));
   };
@@ -46,6 +71,19 @@ const AdminContent: React.FC = () => {
   const handleSaveContact = () => {
     localStorage.setItem('contactContent', JSON.stringify(contactContent));
     toast.success(t('contact_content_saved'));
+  };
+
+  const handleHoursChange = (day: string, field: 'isOpen' | 'start' | 'end', value: string | boolean) => {
+    setContactContent({
+      ...contactContent,
+      hours: {
+        ...contactContent.hours,
+        [day]: {
+          ...contactContent.hours[day as keyof typeof contactContent.hours],
+          [field]: value
+        }
+      }
+    });
   };
   
   return (
@@ -166,14 +204,272 @@ const AdminContent: React.FC = () => {
               className="bg-bar-light border-white/10 text-white"
             />
           </div>
+          
+          {/* Working Hours Section */}
           <div>
-            <label className="block text-sm font-medium text-white/70 mb-1">{t('hours')}</label>
-            <Input
-              value={contactContent.hours}
-              onChange={(e) => setContactContent({...contactContent, hours: e.target.value})}
-              className="bg-bar-light border-white/10 text-white"
-            />
+            <h3 className="text-lg font-medium mb-3">{t('opening_hours')}</h3>
+            <div className="space-y-3 bg-bar-black/30 p-4 rounded-md">
+              {/* Monday */}
+              <div className="grid grid-cols-12 gap-3 items-center">
+                <div className="col-span-3 md:col-span-2">
+                  <label className="block text-sm text-white/70">{t('monday')}</label>
+                </div>
+                <div className="col-span-3 md:col-span-2">
+                  <Switch
+                    checked={contactContent.hours.monday.isOpen}
+                    onCheckedChange={(checked) => handleHoursChange('monday', 'isOpen', checked)}
+                    id="monday-open"
+                  />
+                  <label htmlFor="monday-open" className="ml-2 text-xs text-white/70">
+                    {contactContent.hours.monday.isOpen ? t('open') : t('closed')}
+                  </label>
+                </div>
+                {contactContent.hours.monday.isOpen && (
+                  <>
+                    <div className="col-span-3 md:col-span-4">
+                      <Input
+                        type="time"
+                        value={contactContent.hours.monday.start}
+                        onChange={(e) => handleHoursChange('monday', 'start', e.target.value)}
+                        className="bg-bar-light border-white/10 text-white text-sm h-8"
+                      />
+                    </div>
+                    <div className="col-span-3 md:col-span-4">
+                      <Input
+                        type="time"
+                        value={contactContent.hours.monday.end}
+                        onChange={(e) => handleHoursChange('monday', 'end', e.target.value)}
+                        className="bg-bar-light border-white/10 text-white text-sm h-8"
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+              
+              {/* Tuesday */}
+              <div className="grid grid-cols-12 gap-3 items-center">
+                <div className="col-span-3 md:col-span-2">
+                  <label className="block text-sm text-white/70">{t('tuesday')}</label>
+                </div>
+                <div className="col-span-3 md:col-span-2">
+                  <Switch
+                    checked={contactContent.hours.tuesday.isOpen}
+                    onCheckedChange={(checked) => handleHoursChange('tuesday', 'isOpen', checked)}
+                    id="tuesday-open"
+                  />
+                  <label htmlFor="tuesday-open" className="ml-2 text-xs text-white/70">
+                    {contactContent.hours.tuesday.isOpen ? t('open') : t('closed')}
+                  </label>
+                </div>
+                {contactContent.hours.tuesday.isOpen && (
+                  <>
+                    <div className="col-span-3 md:col-span-4">
+                      <Input
+                        type="time"
+                        value={contactContent.hours.tuesday.start}
+                        onChange={(e) => handleHoursChange('tuesday', 'start', e.target.value)}
+                        className="bg-bar-light border-white/10 text-white text-sm h-8"
+                      />
+                    </div>
+                    <div className="col-span-3 md:col-span-4">
+                      <Input
+                        type="time"
+                        value={contactContent.hours.tuesday.end}
+                        onChange={(e) => handleHoursChange('tuesday', 'end', e.target.value)}
+                        className="bg-bar-light border-white/10 text-white text-sm h-8"
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+              
+              {/* Wednesday */}
+              <div className="grid grid-cols-12 gap-3 items-center">
+                <div className="col-span-3 md:col-span-2">
+                  <label className="block text-sm text-white/70">{t('wednesday')}</label>
+                </div>
+                <div className="col-span-3 md:col-span-2">
+                  <Switch
+                    checked={contactContent.hours.wednesday.isOpen}
+                    onCheckedChange={(checked) => handleHoursChange('wednesday', 'isOpen', checked)}
+                    id="wednesday-open"
+                  />
+                  <label htmlFor="wednesday-open" className="ml-2 text-xs text-white/70">
+                    {contactContent.hours.wednesday.isOpen ? t('open') : t('closed')}
+                  </label>
+                </div>
+                {contactContent.hours.wednesday.isOpen && (
+                  <>
+                    <div className="col-span-3 md:col-span-4">
+                      <Input
+                        type="time"
+                        value={contactContent.hours.wednesday.start}
+                        onChange={(e) => handleHoursChange('wednesday', 'start', e.target.value)}
+                        className="bg-bar-light border-white/10 text-white text-sm h-8"
+                      />
+                    </div>
+                    <div className="col-span-3 md:col-span-4">
+                      <Input
+                        type="time"
+                        value={contactContent.hours.wednesday.end}
+                        onChange={(e) => handleHoursChange('wednesday', 'end', e.target.value)}
+                        className="bg-bar-light border-white/10 text-white text-sm h-8"
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+              
+              {/* Thursday */}
+              <div className="grid grid-cols-12 gap-3 items-center">
+                <div className="col-span-3 md:col-span-2">
+                  <label className="block text-sm text-white/70">{t('thursday')}</label>
+                </div>
+                <div className="col-span-3 md:col-span-2">
+                  <Switch
+                    checked={contactContent.hours.thursday.isOpen}
+                    onCheckedChange={(checked) => handleHoursChange('thursday', 'isOpen', checked)}
+                    id="thursday-open"
+                  />
+                  <label htmlFor="thursday-open" className="ml-2 text-xs text-white/70">
+                    {contactContent.hours.thursday.isOpen ? t('open') : t('closed')}
+                  </label>
+                </div>
+                {contactContent.hours.thursday.isOpen && (
+                  <>
+                    <div className="col-span-3 md:col-span-4">
+                      <Input
+                        type="time"
+                        value={contactContent.hours.thursday.start}
+                        onChange={(e) => handleHoursChange('thursday', 'start', e.target.value)}
+                        className="bg-bar-light border-white/10 text-white text-sm h-8"
+                      />
+                    </div>
+                    <div className="col-span-3 md:col-span-4">
+                      <Input
+                        type="time"
+                        value={contactContent.hours.thursday.end}
+                        onChange={(e) => handleHoursChange('thursday', 'end', e.target.value)}
+                        className="bg-bar-light border-white/10 text-white text-sm h-8"
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+              
+              {/* Friday */}
+              <div className="grid grid-cols-12 gap-3 items-center">
+                <div className="col-span-3 md:col-span-2">
+                  <label className="block text-sm text-white/70">{t('friday')}</label>
+                </div>
+                <div className="col-span-3 md:col-span-2">
+                  <Switch
+                    checked={contactContent.hours.friday.isOpen}
+                    onCheckedChange={(checked) => handleHoursChange('friday', 'isOpen', checked)}
+                    id="friday-open"
+                  />
+                  <label htmlFor="friday-open" className="ml-2 text-xs text-white/70">
+                    {contactContent.hours.friday.isOpen ? t('open') : t('closed')}
+                  </label>
+                </div>
+                {contactContent.hours.friday.isOpen && (
+                  <>
+                    <div className="col-span-3 md:col-span-4">
+                      <Input
+                        type="time"
+                        value={contactContent.hours.friday.start}
+                        onChange={(e) => handleHoursChange('friday', 'start', e.target.value)}
+                        className="bg-bar-light border-white/10 text-white text-sm h-8"
+                      />
+                    </div>
+                    <div className="col-span-3 md:col-span-4">
+                      <Input
+                        type="time"
+                        value={contactContent.hours.friday.end}
+                        onChange={(e) => handleHoursChange('friday', 'end', e.target.value)}
+                        className="bg-bar-light border-white/10 text-white text-sm h-8"
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+              
+              {/* Saturday */}
+              <div className="grid grid-cols-12 gap-3 items-center">
+                <div className="col-span-3 md:col-span-2">
+                  <label className="block text-sm text-white/70">{t('saturday')}</label>
+                </div>
+                <div className="col-span-3 md:col-span-2">
+                  <Switch
+                    checked={contactContent.hours.saturday.isOpen}
+                    onCheckedChange={(checked) => handleHoursChange('saturday', 'isOpen', checked)}
+                    id="saturday-open"
+                  />
+                  <label htmlFor="saturday-open" className="ml-2 text-xs text-white/70">
+                    {contactContent.hours.saturday.isOpen ? t('open') : t('closed')}
+                  </label>
+                </div>
+                {contactContent.hours.saturday.isOpen && (
+                  <>
+                    <div className="col-span-3 md:col-span-4">
+                      <Input
+                        type="time"
+                        value={contactContent.hours.saturday.start}
+                        onChange={(e) => handleHoursChange('saturday', 'start', e.target.value)}
+                        className="bg-bar-light border-white/10 text-white text-sm h-8"
+                      />
+                    </div>
+                    <div className="col-span-3 md:col-span-4">
+                      <Input
+                        type="time"
+                        value={contactContent.hours.saturday.end}
+                        onChange={(e) => handleHoursChange('saturday', 'end', e.target.value)}
+                        className="bg-bar-light border-white/10 text-white text-sm h-8"
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+              
+              {/* Sunday */}
+              <div className="grid grid-cols-12 gap-3 items-center">
+                <div className="col-span-3 md:col-span-2">
+                  <label className="block text-sm text-white/70">{t('sunday')}</label>
+                </div>
+                <div className="col-span-3 md:col-span-2">
+                  <Switch
+                    checked={contactContent.hours.sunday.isOpen}
+                    onCheckedChange={(checked) => handleHoursChange('sunday', 'isOpen', checked)}
+                    id="sunday-open"
+                  />
+                  <label htmlFor="sunday-open" className="ml-2 text-xs text-white/70">
+                    {contactContent.hours.sunday.isOpen ? t('open') : t('closed')}
+                  </label>
+                </div>
+                {contactContent.hours.sunday.isOpen && (
+                  <>
+                    <div className="col-span-3 md:col-span-4">
+                      <Input
+                        type="time"
+                        value={contactContent.hours.sunday.start}
+                        onChange={(e) => handleHoursChange('sunday', 'start', e.target.value)}
+                        className="bg-bar-light border-white/10 text-white text-sm h-8"
+                      />
+                    </div>
+                    <div className="col-span-3 md:col-span-4">
+                      <Input
+                        type="time"
+                        value={contactContent.hours.sunday.end}
+                        onChange={(e) => handleHoursChange('sunday', 'end', e.target.value)}
+                        className="bg-bar-light border-white/10 text-white text-sm h-8"
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
+          
           <div className="pt-2">
             <button
               onClick={handleSaveContact}

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin, Clock, Phone, Mail, Send } from 'lucide-react';
 import { useRevealAnimation, GradientText, NeonGlow } from './Animations';
 import { useLanguage } from '../context/LanguageContext';
@@ -15,6 +15,30 @@ const ContactSection: React.FC = () => {
     guests: '2',
     message: '',
   });
+  
+  const [contactInfo, setContactInfo] = useState({
+    address: "123 Nightlife Street, Downtown",
+    phone: "+1 (555) 123-4567",
+    email: "reservations@neonbar.com",
+    hours: {
+      monday: { isOpen: false, start: "18:00", end: "01:00" },
+      tuesday: { isOpen: true, start: "18:00", end: "01:00" },
+      wednesday: { isOpen: true, start: "18:00", end: "01:00" },
+      thursday: { isOpen: true, start: "18:00", end: "01:00" },
+      friday: { isOpen: true, start: "18:00", end: "03:00" },
+      saturday: { isOpen: true, start: "18:00", end: "03:00" },
+      sunday: { isOpen: true, start: "18:00", end: "00:00" }
+    }
+  });
+
+  useEffect(() => {
+    // Load contact settings from localStorage if available
+    const storedContactContent = localStorage.getItem('contactContent');
+    if (storedContactContent) {
+      const parsedContent = JSON.parse(storedContactContent);
+      setContactInfo(parsedContent);
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -34,6 +58,67 @@ const ContactSection: React.FC = () => {
       guests: '2',
       message: '',
     });
+  };
+
+  // Format opening hours for display
+  const formatOpeningHours = () => {
+    const days = [
+      { key: 'monday', label: t('monday') },
+      { key: 'tuesday', label: t('tuesday') },
+      { key: 'wednesday', label: t('wednesday') },
+      { key: 'thursday', label: t('thursday') },
+      { key: 'friday', label: t('friday') },
+      { key: 'saturday', label: t('saturday') },
+      { key: 'sunday', label: t('sunday') }
+    ];
+    
+    // Group days with the same hours
+    const groupedHours: Record<string, string[]> = {};
+    
+    days.forEach(day => {
+      const dayKey = day.key as keyof typeof contactInfo.hours;
+      const dayInfo = contactInfo.hours[dayKey];
+      
+      if (!dayInfo.isOpen) {
+        const key = `${t('closed')}`;
+        groupedHours[key] = groupedHours[key] || [];
+        groupedHours[key].push(day.label);
+      } else {
+        const key = `${dayInfo.start} - ${dayInfo.end}`;
+        groupedHours[key] = groupedHours[key] || [];
+        groupedHours[key].push(day.label);
+      }
+    });
+    
+    // Format the grouped hours for display
+    return Object.entries(groupedHours).map(([hours, daysList], index) => {
+      // Helper function to format day ranges
+      const formatDayRange = (days: string[]) => {
+        if (days.length === 1) return days[0];
+        if (days.length === 2) return `${days[0]} & ${days[1]}`;
+        
+        // Find consecutive days
+        const ranges: string[] = [];
+        let rangeStart = 0;
+        
+        for (let i = 1; i <= days.length; i++) {
+          if (i === days.length || days[i] !== days[i-1]) {
+            if (i - rangeStart > 2) {
+              ranges.push(`${days[rangeStart]} - ${days[i-1]}`);
+            } else {
+              for (let j = rangeStart; j < i; j++) {
+                ranges.push(days[j]);
+              }
+            }
+            rangeStart = i;
+          }
+        }
+        
+        return ranges.join(', ');
+      };
+      
+      return `${formatDayRange(daysList)}: ${hours}`;
+    }).join('\n');
   };
 
   return (
@@ -70,10 +155,10 @@ const ContactSection: React.FC = () => {
               {/* Contact Items */}
               <div className="space-y-6 mb-8">
                 {[
-                  { icon: <MapPin size={20} className="text-neon-blue" />, title: t('address'), content: t('address_full') },
-                  { icon: <Clock size={20} className="text-neon-purple" />, title: t('opening_hours'), content: t('opening_hours_full') },
-                  { icon: <Phone size={20} className="text-neon-pink" />, title: t('phone'), content: "+1 (555) 123-4567" },
-                  { icon: <Mail size={20} className="text-neon-blue" />, title: t('email'), content: "reservations@neonbar.com" }
+                  { icon: <MapPin size={20} className="text-neon-blue" />, title: t('address'), content: contactInfo.address },
+                  { icon: <Clock size={20} className="text-neon-purple" />, title: t('opening_hours'), content: formatOpeningHours() },
+                  { icon: <Phone size={20} className="text-neon-pink" />, title: t('phone'), content: contactInfo.phone },
+                  { icon: <Mail size={20} className="text-neon-blue" />, title: t('email'), content: contactInfo.email }
                 ].map((item, index) => (
                   <div key={index} className="flex items-start">
                     <div className="mr-4 mt-1">{item.icon}</div>
@@ -129,7 +214,7 @@ const ContactSection: React.FC = () => {
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Name */}
+                  {/* Form fields */}
                   <div>
                     <label htmlFor="name" className="block text-white/80 text-sm mb-2">
                       {t('name')}

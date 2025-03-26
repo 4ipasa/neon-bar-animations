@@ -1,11 +1,42 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { GradientText } from './Animations';
 import { Heart } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const Footer: React.FC = () => {
   const { t } = useLanguage();
+  
+  const [contactInfo, setContactInfo] = useState({
+    address: "123 Nightlife Street, Downtown",
+    phone: "+1 (555) 123-4567",
+    email: "reservations@neonbar.com",
+    hours: {
+      monday: { isOpen: false, start: "18:00", end: "01:00" },
+      tuesday: { isOpen: true, start: "18:00", end: "01:00" },
+      wednesday: { isOpen: true, start: "18:00", end: "01:00" },
+      thursday: { isOpen: true, start: "18:00", end: "01:00" },
+      friday: { isOpen: true, start: "18:00", end: "03:00" },
+      saturday: { isOpen: true, start: "18:00", end: "03:00" },
+      sunday: { isOpen: true, start: "18:00", end: "00:00" }
+    }
+  });
+
+  useEffect(() => {
+    // Load contact settings from localStorage if available
+    const storedContactContent = localStorage.getItem('contactContent');
+    if (storedContactContent) {
+      const parsedContent = JSON.parse(storedContactContent);
+      setContactInfo(parsedContent);
+    }
+  }, []);
+
+  // Format opening hours for display in the footer
+  const formatDayHours = (day: keyof typeof contactInfo.hours) => {
+    const dayInfo = contactInfo.hours[day];
+    if (!dayInfo.isOpen) return t('closed');
+    return `${dayInfo.start} - ${dayInfo.end}`;
+  };
 
   return (
     <footer className="bg-bar-darker py-16 relative">
@@ -73,11 +104,10 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-medium mb-4">{t('contact')}</h4>
             <address className="not-italic text-white/70 text-sm space-y-2">
-              <p>123 Nightlife Street</p>
-              <p>Downtown, New York</p>
-              <p>NY 10001</p>
-              <p className="pt-2">+1 (555) 123-4567</p>
-              <p>reservations@neonbar.com</p>
+              <p>{contactInfo.address.split(',')[0]}</p>
+              <p>{contactInfo.address.split(',').slice(1).join(',')}</p>
+              <p className="pt-2">{contactInfo.phone}</p>
+              <p>{contactInfo.email}</p>
             </address>
           </div>
           
@@ -87,19 +117,19 @@ const Footer: React.FC = () => {
             <ul className="text-white/70 text-sm space-y-2">
               <li className="flex justify-between">
                 <span>{t('monday')}</span>
-                <span>{t('closed')}</span>
+                <span>{formatDayHours('monday')}</span>
               </li>
               <li className="flex justify-between">
-                <span>{t('tuesday_thursday')}</span>
-                <span>18:00 - 01:00</span>
+                <span>{t('tuesday')}-{t('thursday')}</span>
+                <span>{formatDayHours('tuesday')}</span>
               </li>
               <li className="flex justify-between">
-                <span>{t('friday_saturday')}</span>
-                <span>18:00 - 03:00</span>
+                <span>{t('friday')}-{t('saturday')}</span>
+                <span>{formatDayHours('friday')}</span>
               </li>
               <li className="flex justify-between">
                 <span>{t('sunday')}</span>
-                <span>18:00 - 00:00</span>
+                <span>{formatDayHours('sunday')}</span>
               </li>
             </ul>
           </div>

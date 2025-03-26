@@ -129,5 +129,50 @@ export const enTranslations = {
   happy_hours_time: "Every day from 6PM to 8PM",
   find_us: "Find Us",
   nightlife_street: "123 Nightlife Street, Downtown",
-  scroll: "Scroll"
+  scroll: "Scroll",
+  
+  // Contact section
+  get_in_touch: "Get In Touch",
+  reserve_your_experience: "Reserve Your Experience",
+  book_table_message: "Book a table for an unforgettable evening of exceptional cocktails and vibrant atmosphere.",
+  visit_us: "Visit Us",
+  address_full: "123 Nightlife Street,\nDowntown, New York,\nNY 10001",
+  opening_hours_full: "Monday: Closed\nTuesday-Thursday: 18:00-01:00\nFriday-Saturday: 18:00-03:00\nSunday: 18:00-00:00",
+  follow_us: "Follow Us",
+  make_reservation: "Make a Reservation",
+  name: "Name",
+  your_name: "Your Name",
+  your_email: "Your Email",
+  date: "Date",
+  time: "Time",
+  number_of_guests: "Number of Guests",
+  person: "Person",
+  people: "People",
+  special_request: "Special Request",
+  any_special_requests: "Any special requests or preferences?",
+  
+  // Footer
+  premium_experience_desc: "Premium cocktail bar offering exceptional drinks and atmosphere in the heart of the city.",
+  quick_links: "Quick Links",
+  home_link: "Home",
+  menu_link: "Menu",
+  about_us: "About Us",
+  contact_link: "Contact",
+  reservations: "Reservations",
+  rights_reserved: "© 2023 Neon Bar. All rights reserved.",
+  crafted_with_love: "Crafted with",
+  
+  // Working hours admin
+  monday: "Monday",
+  tuesday: "Tuesday",
+  wednesday: "Wednesday",
+  thursday: "Thursday",
+  friday: "Friday",
+  saturday: "Saturday",
+  sunday: "Sunday",
+  open: "Open",
+  closed: "Closed",
+  opening_hours: "Opening Hours",
+  tuesday_thursday: "Tuesday-Thursday",
+  friday_saturday: "Friday-Saturday"
 };
