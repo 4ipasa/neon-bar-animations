@@ -1,3 +1,4 @@
+
 export const kzTranslations = {
   home: "Басты бет",
   menu: "Мәзір",
@@ -40,7 +41,7 @@ export const kzTranslations = {
   confirm_delete: "Жоюды растау",
   delete_cocktail_confirmation: "Бұл коктейльді жойғыңыз келетініне сенімдісіз бе?",
   delete: "Жою",
-  cocktail_added: "Коктейль қосылды!",
+  cocktail_added_success: "Коктейль қосылды!",
   cocktail_updated: "Коктейль жаңартылды!",
   cocktail_deleted: "Коктейль жойылды!",
   english: "Ағылшын",
@@ -59,6 +60,8 @@ export const kzTranslations = {
   invalid_credentials: "Жарамсыз деректер",
   return_to_site: "Сайтқа қайта оралу",
   admin_credentials_hint: "Кіру үшін 'admin' және 'password' пайдаланыңыз.",
+  login_successful: "Кіру сәтті!",
+  
   // Admin Dashboard
   dashboard: "Басқару тақтасы",
   dashboard_overview: "Басқару тақтасының шолуы",
@@ -111,7 +114,5 @@ export const kzTranslations = {
   save_colors: "Түстерді сақтау",
   colors_saved: "Түстер сәтті сақталды",
   reset_to_default: "Әдепкі мәндерге қайтару",
-  settings_reset: "Параметрлер әдепкі мәндерге қайтарылды",
-  settings_coming_soon: "Параметрлерді басқару жақында пайда болады",
-  content_management_coming_soon: "Мазмұнды басқару жақында пайда болады"
+  settings_reset: "Параметрлер әдепкі мәндерге қайтарылды"
 };

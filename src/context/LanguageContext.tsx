@@ -56,13 +56,13 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
 };
 
 // Import translation files
-import { translationsRu } from '../translations/ru';
-import { translationsEn } from '../translations/en';
-import { translationsKz } from '../translations/kz';
+import { ruTranslations } from '../translations/ru';
+import { enTranslations } from '../translations/en';
+import { kzTranslations } from '../translations/kz';
 
 // Combine all translations
 const translations = {
-  ru: translationsRu,
-  en: translationsEn,
-  kz: translationsKz,
+  ru: ruTranslations,
+  en: enTranslations,
+  kz: kzTranslations,
 };

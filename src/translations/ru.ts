@@ -1,3 +1,4 @@
+
 export const ruTranslations = {
   home: "Главная",
   menu: "Меню",
@@ -55,6 +56,9 @@ export const ruTranslations = {
   admin_credentials_hint: "Используйте 'admin' в качестве имени пользователя и 'password' в качестве пароля для демонстрации.",
   login_successful: "Успешный вход!",
   signature: "Фирменный",
+  cocktails: "Коктейли",
+  site_content: "Содержимое сайта",
+  settings: "Настройки",
   
   // Admin Dashboard
   dashboard: "Панель управления",
@@ -69,7 +73,7 @@ export const ruTranslations = {
   time: "Время",
   activity: "Действие",
   user: "Пользователь",
-  cocktail_added: "Добавлен коктейль",
+  cocktail_added_success: "Добавлен коктейль",
   menu_updated: "Обновлено меню",
   site_content_edited: "Отредактирован контент сайта",
   

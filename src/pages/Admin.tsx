@@ -1,115 +1,147 @@
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, LogOut, LayoutDashboard, Cocktail, FileText, Settings } from 'lucide-react';
-import { GradientText } from '../components/Animations';
-import AdminCocktails from '../components/admin/AdminCocktails';
-import AdminLogin from '../components/admin/AdminLogin';
+import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
+import { BarChart, User, Settings, Layers, LogOut, Home, Menu, ScrollText, Wine } from 'lucide-react';
 import AdminDashboard from '../components/admin/AdminDashboard';
+import AdminCocktails from '../components/admin/AdminCocktails';
 import AdminContent from '../components/admin/AdminContent';
 import AdminSettings from '../components/admin/AdminSettings';
+import AdminLogin from '../components/admin/AdminLogin';
 import { useLanguage } from '../context/LanguageContext';
 
-const Admin: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<string>("dashboard");
+const Admin = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useLanguage();
   
+  // Check if user is authenticated
   useEffect(() => {
-    // Check if admin is logged in
-    const adminToken = localStorage.getItem('adminToken');
-    if (adminToken === 'admin-secret-token') {
+    const token = localStorage.getItem('adminToken');
+    if (token === 'admin-secret-token') {
       setIsAuthenticated(true);
     }
   }, []);
   
+  // Handle logout
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
     setIsAuthenticated(false);
+    navigate('/admin');
   };
   
+  // Navigation items
+  const navItems = [
+    { path: '/admin/dashboard', name: t('dashboard'), icon: <BarChart size={20} /> },
+    { path: '/admin/cocktails', name: t('cocktails'), icon: <Wine size={20} /> },
+    { path: '/admin/content', name: t('site_content'), icon: <ScrollText size={20} /> },
+    { path: '/admin/settings', name: t('settings'), icon: <Settings size={20} /> },
+  ];
+  
+  // If not authenticated, show login page
   if (!isAuthenticated) {
-    return <AdminLogin onLogin={() => setIsAuthenticated(true)} />;
+    return <AdminLogin onLoginSuccess={() => setIsAuthenticated(true)} />;
   }
   
   return (
-    <div className="min-h-screen bg-bar-black text-white">
-      {/* Admin Header */}
-      <header className="bg-bar-dark border-b border-white/10 p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="flex items-center">
-            <Shield className="text-neon-blue mr-2" size={20} />
-            <h1 className="text-xl font-bold">
-              <GradientText>{t('admin_panel')}</GradientText>
-            </h1>
-          </div>
-          <div className="flex items-center gap-4">
-            <button 
-              onClick={() => navigate('/')}
-              className="text-white/70 hover:text-white text-sm"
-            >
-              {t('view_site')}
-            </button>
-            <button 
-              onClick={handleLogout}
-              className="flex items-center text-white/70 hover:text-white text-sm"
-            >
-              <LogOut size={16} className="mr-1" />
-              {t('logout')}
-            </button>
-          </div>
+    <div className="admin-layout min-h-screen bg-gradient-to-br from-bar-dark to-bar-darker text-white">
+      {/* Admin Sidebar */}
+      <aside className="fixed left-0 top-0 h-screen w-64 glass-card border-r border-white/10 z-50 hidden md:block">
+        <div className="p-6">
+          <h1 className="text-2xl font-bold text-neon-blue tracking-wider">{t('admin_panel')}</h1>
         </div>
-      </header>
+        <div className="px-4 py-2">
+          <nav className="space-y-1">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`flex items-center px-4 py-3 rounded-lg transition-colors ${
+                  location.pathname === item.path
+                    ? 'bg-neon-blue/20 text-neon-blue'
+                    : 'hover:bg-white/5'
+                }`}
+              >
+                <span className="mr-3">{item.icon}</span>
+                <span>{item.name}</span>
+              </Link>
+            ))}
+          </nav>
+        </div>
+        <div className="absolute bottom-0 left-0 w-full p-4 border-t border-white/10">
+          <Link
+            to="/"
+            className="flex items-center px-4 py-3 rounded-lg hover:bg-white/5 transition-colors mb-2"
+          >
+            <Home size={20} className="mr-3" />
+            <span>{t('view_site')}</span>
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="flex items-center px-4 py-3 rounded-lg hover:bg-white/5 transition-colors w-full"
+          >
+            <LogOut size={20} className="mr-3" />
+            <span>{t('logout')}</span>
+          </button>
+        </div>
+      </aside>
+      
+      {/* Mobile Header */}
+      <div className="md:hidden w-full glass-card border-b border-white/10 p-4 flex justify-between items-center sticky top-0 z-10">
+        <h1 className="text-lg font-bold text-neon-blue">{t('admin_panel')}</h1>
+        <div className="flex gap-2">
+          <Link to="/" className="p-2 rounded-lg hover:bg-white/10">
+            <Home size={20} />
+          </Link>
+          <button
+            onClick={() => document.getElementById('mobile-menu')?.classList.toggle('hidden')}
+            className="p-2 rounded-lg hover:bg-white/10"
+          >
+            <Menu size={20} />
+          </button>
+        </div>
+      </div>
+      
+      {/* Mobile Menu */}
+      <div id="mobile-menu" className="hidden md:hidden fixed inset-0 bg-black/90 z-40 pt-16">
+        <div className="p-4">
+          <nav className="space-y-2">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                onClick={() => document.getElementById('mobile-menu')?.classList.add('hidden')}
+                className={`flex items-center px-4 py-3 rounded-lg ${
+                  location.pathname === item.path
+                    ? 'bg-neon-blue/20 text-neon-blue'
+                    : 'hover:bg-white/5'
+                }`}
+              >
+                <span className="mr-3">{item.icon}</span>
+                <span>{item.name}</span>
+              </Link>
+            ))}
+            <button
+              onClick={handleLogout}
+              className="flex items-center px-4 py-3 rounded-lg hover:bg-white/5 transition-colors w-full mt-6"
+            >
+              <LogOut size={20} className="mr-3" />
+              <span>{t('logout')}</span>
+            </button>
+          </nav>
+        </div>
+      </div>
       
       {/* Admin Content */}
-      <div className="container mx-auto p-6">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="bg-bar-light border border-white/10 mb-8 grid grid-cols-4 md:grid-cols-4">
-            <TabsTrigger value="dashboard" className="data-[state=active]:bg-bar-dark data-[state=active]:text-neon-blue">
-              <div className="flex items-center">
-                <LayoutDashboard size={14} className="mr-1 md:mr-2" />
-                <span className="hidden md:inline">{t('dashboard')}</span>
-              </div>
-            </TabsTrigger>
-            <TabsTrigger value="cocktails" className="data-[state=active]:bg-bar-dark data-[state=active]:text-neon-blue">
-              <div className="flex items-center">
-                <Cocktail size={14} className="mr-1 md:mr-2" />
-                <span className="hidden md:inline">{t('cocktails')}</span>
-              </div>
-            </TabsTrigger>
-            <TabsTrigger value="content" className="data-[state=active]:bg-bar-dark data-[state=active]:text-neon-blue">
-              <div className="flex items-center">
-                <FileText size={14} className="mr-1 md:mr-2" />
-                <span className="hidden md:inline">{t('site_content')}</span>
-              </div>
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="data-[state=active]:bg-bar-dark data-[state=active]:text-neon-blue">
-              <div className="flex items-center">
-                <Settings size={14} className="mr-1 md:mr-2" />
-                <span className="hidden md:inline">{t('settings')}</span>
-              </div>
-            </TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="dashboard" className="mt-0">
-            <AdminDashboard />
-          </TabsContent>
-          
-          <TabsContent value="cocktails" className="mt-0">
-            <AdminCocktails />
-          </TabsContent>
-          
-          <TabsContent value="content" className="mt-0">
-            <AdminContent />
-          </TabsContent>
-          
-          <TabsContent value="settings" className="mt-0">
-            <AdminSettings />
-          </TabsContent>
-        </Tabs>
-      </div>
+      <main className="md:ml-64 p-6">
+        <Routes>
+          <Route path="/" element={<AdminDashboard />} />
+          <Route path="/dashboard" element={<AdminDashboard />} />
+          <Route path="/cocktails" element={<AdminCocktails />} />
+          <Route path="/content" element={<AdminContent />} />
+          <Route path="/settings" element={<AdminSettings />} />
+        </Routes>
+      </main>
     </div>
   );
 };

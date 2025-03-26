@@ -1,3 +1,4 @@
+
 export const enTranslations = {
   home: "Home",
   menu: "Menu",
@@ -41,7 +42,7 @@ export const enTranslations = {
   cancel: "Cancel",
   save: "Save",
   edit_cocktail: "Edit Cocktail",
-  cocktail_added: "Cocktail added successfully!",
+  cocktail_added_success: "Cocktail added successfully!",
   cocktail_updated: "Cocktail updated successfully!",
   confirm_delete: "Confirm Delete",
   delete_cocktail_confirmation: "Are you sure you want to delete this cocktail?",
