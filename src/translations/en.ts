@@ -1,4 +1,3 @@
-
 export const enTranslations = {
   home: "Home",
   menu: "Menu",
@@ -144,7 +143,7 @@ export const enTranslations = {
   your_name: "Your Name",
   your_email: "Your Email",
   date: "Date",
-  time: "Time",
+  timing: "Time",
   number_of_guests: "Number of Guests",
   person: "Person",
   people: "People",

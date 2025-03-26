@@ -1,4 +1,3 @@
-
 export const ruTranslations = {
   home: "Главная",
   menu: "Меню",
@@ -143,7 +142,7 @@ export const ruTranslations = {
   your_name: "Ваше имя",
   your_email: "Ваш email",
   date: "Дата",
-  time: "Время",
+  timing: "Время",
   number_of_guests: "Количество гостей",
   person: "Человек",
   people: "Человек",

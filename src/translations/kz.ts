@@ -1,4 +1,3 @@
-
 export const kzTranslations = {
   home: "Басты бет",
   menu: "Мәзір",
@@ -143,7 +142,7 @@ export const kzTranslations = {
   your_name: "Сіздің атыңыз",
   your_email: "Сіздің электрондық поштаңыз",
   date: "Күні",
-  time: "Уақыты",
+  timing: "Уақыты",
   number_of_guests: "Қонақтар саны",
   person: "Адам",
   people: "Адам",
