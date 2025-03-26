@@ -114,5 +114,19 @@ export const kzTranslations = {
   save_colors: "Түстерді сақтау",
   colors_saved: "Түстер сәтті сақталды",
   reset_to_default: "Әдепкі мәндерге қайтару",
-  settings_reset: "Параметрлер әдепкі мәндерге қайтарылды"
+  settings_reset: "Параметрлер әдепкі мәндерге қайтарылды",
+  
+  // Hero Section specific translations
+  premium_cocktail_experience: "Премиум коктейль тәжірибесі",
+  discover_art_of_mixology: "Миксология өнерін ашыңыз",
+  immerse_yourself: "Әр сусын өз тарихын баяндайтын жарқын атмосфераға енгізіңіз. Дәлдікпен және құштарлықпен жасалған ең жақсы коктейльдерді сезініңіз.",
+  explore_our_menu: "Мәзірімізді зерттеңіз",
+  reserve_a_table: "Үстелді брондау",
+  craft_cocktails: "Крафт коктейльдері",
+  expertly_crafted: "Премиум спирттерден тәжірибелі түрде дайындалған",
+  happy_hours: "Қуанышты сағаттар",
+  happy_hours_time: "Күн сайын 18:00-ден 20:00-ге дейін",
+  find_us: "Бізді табыңыз",
+  nightlife_street: "Түнгі өмір көшесі 123, Қала орталығы",
+  scroll: "Төмен қарай жылжу"
 };

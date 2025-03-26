@@ -114,5 +114,19 @@ export const ruTranslations = {
   reset_to_default: "Сбросить до значений по умолчанию",
   settings_reset: "Настройки сброшены до значений по умолчанию",
   settings_coming_soon: "Управление настройками скоро появится",
-  content_management_coming_soon: "Управление контентом скоро появится"
+  content_management_coming_soon: "Управление контентом скоро появится",
+  
+  // Hero Section specific translations
+  premium_cocktail_experience: "Премиум коктейльный опыт",
+  discover_art_of_mixology: "Откройте искусство миксологии",
+  immerse_yourself: "Погрузитесь в яркую атмосферу, где каждый напиток рассказывает историю. Насладитесь лучшими коктейлями, созданными с точностью и страстью.",
+  explore_our_menu: "Изучить наше меню",
+  reserve_a_table: "Забронировать столик",
+  craft_cocktails: "Крафтовые коктейли",
+  expertly_crafted: "Искусно приготовлены из премиальных спиртных напитков",
+  happy_hours: "Счастливые часы",
+  happy_hours_time: "Каждый день с 18:00 до 20:00",
+  find_us: "Найти нас",
+  nightlife_street: "ул. Ночная жизнь 123, Центр города",
+  scroll: "Прокрутить"
 };

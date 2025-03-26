@@ -115,5 +115,19 @@ export const enTranslations = {
   reset_to_default: "Reset to Default",
   settings_reset: "Settings reset to default",
   settings_coming_soon: "Settings management coming soon",
-  content_management_coming_soon: "Content management coming soon"
+  content_management_coming_soon: "Content management coming soon",
+  
+  // Hero Section specific translations
+  premium_cocktail_experience: "Premium Cocktail Experience",
+  discover_art_of_mixology: "Discover the Art of Mixology",
+  immerse_yourself: "Immerse yourself in a vibrant atmosphere where every drink tells a story. Experience the finest cocktails crafted with precision and passion.",
+  explore_our_menu: "Explore Our Menu",
+  reserve_a_table: "Reserve a Table",
+  craft_cocktails: "Craft Cocktails",
+  expertly_crafted: "Expertly crafted with premium spirits",
+  happy_hours: "Happy Hours",
+  happy_hours_time: "Every day from 6PM to 8PM",
+  find_us: "Find Us",
+  nightlife_street: "123 Nightlife Street, Downtown",
+  scroll: "Scroll"
 };

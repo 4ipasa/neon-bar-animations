@@ -1,96 +1,104 @@
 
 import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Eye, EyeOff, Lock } from "lucide-react";
 import { toast } from "sonner";
-import { GradientText } from '../../components/Animations';
-import { Lock } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
-interface AdminLoginProps {
-  onLogin: () => void;
+// Define interface for component props
+export interface AdminLoginProps {
+  onLoginSuccess?: () => void;
 }
 
-const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
+const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { t } = useLanguage();
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    setLoading(true);
     
-    // Simple authentication for demo purposes
-    // In a real app, use proper authentication
+    // Simple mock authentication for demo
     setTimeout(() => {
+      setLoading(false);
       if (username === 'admin' && password === 'password') {
         localStorage.setItem('adminToken', 'admin-secret-token');
         toast.success(t('login_successful'));
-        onLogin();
+        if (onLoginSuccess) {
+          onLoginSuccess();
+        }
       } else {
         toast.error(t('invalid_credentials'));
       }
-      setIsLoading(false);
     }, 1000);
   };
   
   return (
-    <div className="min-h-screen bg-bar-black flex items-center justify-center px-4">
-      <div className="glass-card p-6 md:p-8 w-full max-w-md">
-        <div className="text-center mb-6">
-          <div className="flex justify-center mb-4">
-            <div className="w-12 h-12 rounded-full bg-neon-blue/10 flex items-center justify-center">
-              <Lock className="text-neon-blue" size={24} />
-            </div>
-          </div>
-          <h1 className="text-2xl font-bold mb-2">
-            <GradientText>{t('admin_login')}</GradientText>
-          </h1>
-          <p className="text-white/60 text-sm">{t('admin_login_message')}</p>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-md glass-card p-8 backdrop-blur-lg">
+        <div className="text-center mb-8">
+          <Lock className="w-12 h-12 text-neon-blue mx-auto mb-2" />
+          <h2 className="text-2xl font-bold">{t('admin_login')}</h2>
+          <p className="text-white/60 mt-1">{t('admin_login_message')}</p>
         </div>
         
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-white/70 mb-1">{t('username')}</label>
+        <form onSubmit={handleLogin} className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="username">{t('username')}</Label>
             <Input
+              id="username"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="bg-bar-light border-white/10 text-white"
               placeholder={t('enter_username')}
+              className="bg-bar-black/50 border-white/10"
               required
             />
           </div>
           
-          <div>
-            <label className="block text-sm font-medium text-white/70 mb-1">{t('password')}</label>
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="bg-bar-light border-white/10 text-white"
-              placeholder={t('enter_password')}
-              required
-            />
+          <div className="space-y-2">
+            <Label htmlFor="password">{t('password')}</Label>
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder={t('enter_password')}
+                className="bg-bar-black/50 border-white/10 pr-10"
+                required
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/60 hover:text-white"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
           </div>
           
           <button
             type="submit"
-            disabled={isLoading}
-            className="w-full py-2 px-4 bg-gradient-to-r from-neon-blue to-neon-purple text-white rounded-md hover:opacity-90 transition-opacity disabled:opacity-50"
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-neon-blue to-neon-purple text-white py-3 rounded-md hover:opacity-90 transition-opacity disabled:opacity-50 font-medium"
           >
-            {isLoading ? t('logging_in') : t('login')}
+            {loading ? t('logging_in') : t('login')}
           </button>
+          
+          <p className="text-center text-white/40 text-sm">
+            {t('admin_credentials_hint')}
+          </p>
         </form>
         
-        <div className="mt-6 text-center">
+        <div className="mt-8 text-center">
           <a href="/" className="text-neon-blue hover:underline text-sm">
             {t('return_to_site')}
           </a>
-        </div>
-        
-        <div className="mt-8 pt-6 border-t border-white/10 text-center text-xs text-white/40">
-          {t('admin_credentials_hint')}
         </div>
       </div>
     </div>

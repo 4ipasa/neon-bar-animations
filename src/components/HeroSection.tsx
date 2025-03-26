@@ -42,8 +42,7 @@ const HeroSection: React.FC = () => {
         
         <div ref={(el) => addToRefs(el as HTMLElement)} className="delay-300">
           <h1 className="mb-6 md:mb-8 text-5xl md:text-7xl font-bold leading-tight">
-            {t('discover_art_of_mixology').split(' ').slice(0, -1).join(' ')} <br />
-            <GradientText>{t('discover_art_of_mixology').split(' ').slice(-1)[0]}</GradientText>
+            {t('discover_art_of_mixology')}
           </h1>
         </div>
         
