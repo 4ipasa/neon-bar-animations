@@ -1,8 +1,22 @@
-
 import React, { useState, useEffect } from 'react';
 import { MapPin, Clock, Phone, Mail, Send } from 'lucide-react';
 import { useRevealAnimation, GradientText, NeonGlow } from './Animations';
 import { useLanguage } from '../context/LanguageContext';
+
+const DEFAULT_CONTACT_INFO = {
+  address: "123 Nightlife Street, Downtown",
+  phone: "+1 (555) 123-4567",
+  email: "reservations@neonbar.com",
+  hours: {
+    monday: { isOpen: false, start: "18:00", end: "01:00" },
+    tuesday: { isOpen: true, start: "18:00", end: "01:00" },
+    wednesday: { isOpen: true, start: "18:00", end: "01:00" },
+    thursday: { isOpen: true, start: "18:00", end: "01:00" },
+    friday: { isOpen: true, start: "18:00", end: "03:00" },
+    saturday: { isOpen: true, start: "18:00", end: "03:00" },
+    sunday: { isOpen: true, start: "18:00", end: "00:00" }
+  }
+};
 
 const ContactSection: React.FC = () => {
   const { addToRefs } = useRevealAnimation();
@@ -16,27 +30,27 @@ const ContactSection: React.FC = () => {
     message: '',
   });
   
-  const [contactInfo, setContactInfo] = useState({
-    address: "123 Nightlife Street, Downtown",
-    phone: "+1 (555) 123-4567",
-    email: "reservations@neonbar.com",
-    hours: {
-      monday: { isOpen: false, start: "18:00", end: "01:00" },
-      tuesday: { isOpen: true, start: "18:00", end: "01:00" },
-      wednesday: { isOpen: true, start: "18:00", end: "01:00" },
-      thursday: { isOpen: true, start: "18:00", end: "01:00" },
-      friday: { isOpen: true, start: "18:00", end: "03:00" },
-      saturday: { isOpen: true, start: "18:00", end: "03:00" },
-      sunday: { isOpen: true, start: "18:00", end: "00:00" }
-    }
-  });
+  const [contactInfo, setContactInfo] = useState(DEFAULT_CONTACT_INFO);
 
   useEffect(() => {
-    // Load contact settings from localStorage if available
-    const storedContactContent = localStorage.getItem('contactContent');
-    if (storedContactContent) {
-      const parsedContent = JSON.parse(storedContactContent);
-      setContactInfo(parsedContent);
+    try {
+      // Load contact settings from localStorage if available
+      const storedContactContent = localStorage.getItem('contactContent');
+      if (storedContactContent) {
+        const parsedContent = JSON.parse(storedContactContent);
+        // Ensure all required properties exist by merging with defaults
+        setContactInfo({
+          ...DEFAULT_CONTACT_INFO,
+          ...parsedContent,
+          hours: {
+            ...DEFAULT_CONTACT_INFO.hours,
+            ...(parsedContent.hours || {})
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Error loading stored contact content:", error);
+      // Keep default values in case of error
     }
   }, []);
 
@@ -338,3 +352,4 @@ const ContactSection: React.FC = () => {
 };
 
 export default ContactSection;
+

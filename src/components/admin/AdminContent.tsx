@@ -1,10 +1,24 @@
-
 import React, { useState, useEffect } from 'react';
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { useLanguage } from '../../context/LanguageContext';
+
+const DEFAULT_CONTACT_CONTENT = {
+  address: "123 Nightlife Avenue, City Center",
+  phone: "+1 (555) 123-4567",
+  email: "info@neonbar.com",
+  hours: {
+    monday: { isOpen: false, start: "18:00", end: "01:00" },
+    tuesday: { isOpen: true, start: "18:00", end: "01:00" },
+    wednesday: { isOpen: true, start: "18:00", end: "01:00" },
+    thursday: { isOpen: true, start: "18:00", end: "01:00" },
+    friday: { isOpen: true, start: "18:00", end: "03:00" },
+    saturday: { isOpen: true, start: "18:00", end: "03:00" },
+    sunday: { isOpen: true, start: "18:00", end: "00:00" }
+  }
+};
 
 const AdminContent: React.FC = () => {
   const { t, language } = useLanguage();
@@ -24,39 +38,41 @@ const AdminContent: React.FC = () => {
     showImages: true
   });
   
-  // State for contact section content
-  const [contactContent, setContactContent] = useState({
-    address: "123 Nightlife Avenue, City Center",
-    phone: "+1 (555) 123-4567",
-    email: "info@neonbar.com",
-    hours: {
-      monday: { isOpen: false, start: "18:00", end: "01:00" },
-      tuesday: { isOpen: true, start: "18:00", end: "01:00" },
-      wednesday: { isOpen: true, start: "18:00", end: "01:00" },
-      thursday: { isOpen: true, start: "18:00", end: "01:00" },
-      friday: { isOpen: true, start: "18:00", end: "03:00" },
-      saturday: { isOpen: true, start: "18:00", end: "03:00" },
-      sunday: { isOpen: true, start: "18:00", end: "00:00" }
-    }
-  });
+  // State for contact section content - using default values
+  const [contactContent, setContactContent] = useState(DEFAULT_CONTACT_CONTENT);
 
   // Load stored data on component mount
   useEffect(() => {
-    const storedHeroContent = localStorage.getItem('heroContent');
-    if (storedHeroContent) {
-      setHeroContent(JSON.parse(storedHeroContent));
-    }
+    try {
+      const storedHeroContent = localStorage.getItem('heroContent');
+      if (storedHeroContent) {
+        setHeroContent(JSON.parse(storedHeroContent));
+      }
 
-    const storedAboutContent = localStorage.getItem('aboutContent');
-    if (storedAboutContent) {
-      setAboutContent(JSON.parse(storedAboutContent));
-    }
+      const storedAboutContent = localStorage.getItem('aboutContent');
+      if (storedAboutContent) {
+        setAboutContent(JSON.parse(storedAboutContent));
+      }
 
-    const storedContactContent = localStorage.getItem('contactContent');
-    if (storedContactContent) {
-      setContactContent(JSON.parse(storedContactContent));
+      const storedContactContent = localStorage.getItem('contactContent');
+      if (storedContactContent) {
+        const parsedContent = JSON.parse(storedContactContent);
+        // Ensure all required properties exist by merging with defaults
+        setContactContent({
+          ...DEFAULT_CONTACT_CONTENT,
+          ...parsedContent,
+          hours: {
+            ...DEFAULT_CONTACT_CONTENT.hours,
+            ...(parsedContent.hours || {})
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Error loading stored content:", error);
+      // In case of any errors, use default values
+      toast.error(t('error_loading_settings'));
     }
-  }, []);
+  }, [t]);
   
   const handleSaveHero = () => {
     localStorage.setItem('heroContent', JSON.stringify(heroContent));
@@ -74,16 +90,16 @@ const AdminContent: React.FC = () => {
   };
 
   const handleHoursChange = (day: string, field: 'isOpen' | 'start' | 'end', value: string | boolean) => {
-    setContactContent({
-      ...contactContent,
+    setContactContent(prevState => ({
+      ...prevState,
       hours: {
-        ...contactContent.hours,
+        ...prevState.hours,
         [day]: {
-          ...contactContent.hours[day as keyof typeof contactContent.hours],
+          ...prevState.hours[day as keyof typeof prevState.hours],
           [field]: value
         }
       }
-    });
+    }));
   };
   
   return (
