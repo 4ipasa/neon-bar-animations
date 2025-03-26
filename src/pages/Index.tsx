@@ -35,7 +35,7 @@ const Index = () => {
     
     // Monitor localStorage changes
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'heroContent' || e.key === 'aboutContent' || e.key === 'contactContent') {
+      if (e.key === 'heroContent' || e.key === 'aboutContent' || e.key === 'contactContent' || e.key === 'siteSettings') {
         setLastUpdate(Date.now());
       }
     };
@@ -51,7 +51,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-bar-dark text-white overflow-x-hidden">
       <ParallaxBackground />
-      <Navbar />
+      <Navbar key={`navbar-${lastUpdate}`} />
       <HeroSection key={`hero-${lastUpdate}`} />
       <MenuSection />
       <AboutSection key={`about-${lastUpdate}`} />

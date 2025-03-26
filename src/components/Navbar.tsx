@@ -6,9 +6,13 @@ import LanguageSelector from './LanguageSelector';
 import { useLanguage } from '../context/LanguageContext';
 import { useIsMobile } from '../hooks/use-mobile';
 
+// Default site name to use if localStorage doesn't have a value
+const DEFAULT_SITE_NAME = "NEON BAR";
+
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [siteName, setSiteName] = useState(DEFAULT_SITE_NAME);
   const isMobile = useIsMobile();
   const { t } = useLanguage();
   const isAdmin = localStorage.getItem('adminToken') === 'admin-secret-token';
@@ -22,8 +26,41 @@ const Navbar: React.FC = () => {
       }
     };
 
+    // Load site name from localStorage
+    try {
+      const siteSettings = localStorage.getItem('siteSettings');
+      if (siteSettings) {
+        const settings = JSON.parse(siteSettings);
+        if (settings.siteName) {
+          setSiteName(settings.siteName);
+        }
+      }
+    } catch (error) {
+      console.error("Error loading site settings:", error);
+    }
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    // Listen for storage changes
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'siteSettings') {
+        try {
+          const settings = JSON.parse(e.newValue || '{}');
+          if (settings.siteName) {
+            setSiteName(settings.siteName);
+          }
+        } catch (error) {
+          console.error("Error parsing site settings:", error);
+        }
+      }
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   return (
@@ -38,8 +75,10 @@ const Navbar: React.FC = () => {
         {/* Logo */}
         <a href="#home" className="inline-block">
           <h1 className="text-2xl font-bold">
-            <GradientText>NEON</GradientText>
-            <span className="ml-1 font-light">BAR</span>
+            <GradientText>{siteName.split(' ')[0]}</GradientText>
+            {siteName.split(' ')[1] && (
+              <span className="ml-1 font-light">{siteName.split(' ')[1]}</span>
+            )}
           </h1>
         </a>
 
