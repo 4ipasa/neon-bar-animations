@@ -7,7 +7,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useIsMobile } from '../hooks/use-mobile';
 
 // Default site name to use if localStorage doesn't have a value
-const DEFAULT_SITE_NAME = "NEON BAR";
+const DEFAULT_SITE_NAME = "JD Bar";
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -34,6 +34,9 @@ const Navbar: React.FC = () => {
         if (settings.siteName) {
           setSiteName(settings.siteName);
         }
+      } else {
+        // If no settings exist, save the default
+        localStorage.setItem('siteSettings', JSON.stringify({ siteName: DEFAULT_SITE_NAME }));
       }
     } catch (error) {
       console.error("Error loading site settings:", error);
@@ -63,6 +66,11 @@ const Navbar: React.FC = () => {
     };
   }, []);
 
+  // Split site name to apply neon effect only to the first part (JD)
+  const nameParts = siteName.split(' ');
+  const firstPart = nameParts[0]; // JD
+  const restParts = nameParts.slice(1).join(' '); // Bar
+
   return (
     <nav
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
@@ -75,9 +83,9 @@ const Navbar: React.FC = () => {
         {/* Logo */}
         <a href="#home" className="inline-block">
           <h1 className="text-2xl font-bold">
-            <GradientText>{siteName.split(' ')[0]}</GradientText>
-            {siteName.split(' ')[1] && (
-              <span className="ml-1 font-light">{siteName.split(' ')[1]}</span>
+            <GradientText className="text-shadow-neon animate-pulse-neon">{firstPart}</GradientText>
+            {restParts && (
+              <span className="ml-1 font-light">{restParts}</span>
             )}
           </h1>
         </a>

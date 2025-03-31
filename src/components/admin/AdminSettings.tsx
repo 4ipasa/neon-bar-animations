@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
@@ -10,7 +10,7 @@ const AdminSettings: React.FC = () => {
   
   // State for general settings
   const [settings, setSettings] = useState({
-    siteName: "NEON BAR",
+    siteName: "JD Bar",
     siteTagline: "Premium Cocktail Experience",
     enableNotifications: true,
     showPrices: true,
@@ -26,34 +26,78 @@ const AdminSettings: React.FC = () => {
     backgroundColor: "#0A0A0C"
   });
   
+  // Load settings from localStorage on component mount
+  useEffect(() => {
+    try {
+      const savedSettings = localStorage.getItem('siteSettings');
+      if (savedSettings) {
+        setSettings(prev => ({ ...prev, ...JSON.parse(savedSettings) }));
+      } else {
+        // If no settings exist, save the defaults
+        localStorage.setItem('siteSettings', JSON.stringify(settings));
+      }
+      
+      const savedColors = localStorage.getItem('siteColors');
+      if (savedColors) {
+        setColors(prev => ({ ...prev, ...JSON.parse(savedColors) }));
+      }
+    } catch (error) {
+      console.error("Error loading settings:", error);
+    }
+  }, []);
+
   const handleSaveSettings = () => {
     localStorage.setItem('siteSettings', JSON.stringify(settings));
+    // Dispatch event to notify other components about the change
+    window.dispatchEvent(new StorageEvent('storage', {
+      key: 'siteSettings',
+      newValue: JSON.stringify(settings)
+    }));
     toast.success(t('settings_saved'));
   };
   
   const handleSaveColors = () => {
     localStorage.setItem('siteColors', JSON.stringify(colors));
+    window.dispatchEvent(new StorageEvent('storage', {
+      key: 'siteColors',
+      newValue: JSON.stringify(colors)
+    }));
     toast.success(t('colors_saved'));
-    // In a real app, you'd apply these colors dynamically
   };
   
   const handleResetDefault = () => {
     // Reset to default values
-    setSettings({
-      siteName: "NEON BAR",
+    const defaultSettings = {
+      siteName: "JD Bar",
       siteTagline: "Premium Cocktail Experience",
       enableNotifications: true,
       showPrices: true,
       maintenanceMode: false,
       analyticsEnabled: true
-    });
+    };
     
-    setColors({
+    const defaultColors = {
       primaryColor: "#00A3FF",
       secondaryColor: "#9D00FF",
       textColor: "#FFFFFF",
       backgroundColor: "#0A0A0C"
-    });
+    };
+    
+    setSettings(defaultSettings);
+    setColors(defaultColors);
+    
+    localStorage.setItem('siteSettings', JSON.stringify(defaultSettings));
+    localStorage.setItem('siteColors', JSON.stringify(defaultColors));
+    
+    // Dispatch events to notify other components
+    window.dispatchEvent(new StorageEvent('storage', {
+      key: 'siteSettings',
+      newValue: JSON.stringify(defaultSettings)
+    }));
+    window.dispatchEvent(new StorageEvent('storage', {
+      key: 'siteColors',
+      newValue: JSON.stringify(defaultColors)
+    }));
     
     toast.success(t('settings_reset'));
   };
