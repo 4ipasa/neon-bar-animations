@@ -77,16 +77,20 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
         {/* Logo */}
         <a href="#home" className="inline-block">
-          <h1 className="text-2xl font-bold">
-            <GradientText 
-              className="text-shadow-neon animate-pulse-neon tracking-tighter 
+          <h1 className="text-3xl font-bold flex items-center">
+            <span 
+              className="text-transparent bg-clip-text 
                          bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink 
-                         bg-clip-text text-transparent"
+                         animate-gradient bg-[length:200%_auto] 
+                         text-shadow-neon tracking-tighter 
+                         animate-pulse-neon"
             >
               {firstPart}
-            </GradientText>
+            </span>
             {restParts && (
-              <span className="ml-1 font-light text-white/80">{restParts}</span>
+              <span className="ml-2 text-white/70 text-2xl font-light">
+                {restParts}
+              </span>
             )}
           </h1>
         </a>
