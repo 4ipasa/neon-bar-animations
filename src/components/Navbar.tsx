@@ -27,34 +27,30 @@ const Navbar: React.FC = () => {
     };
 
     // Load site name from localStorage
-    try {
-      const siteSettings = localStorage.getItem('siteSettings');
-      if (siteSettings) {
-        const settings = JSON.parse(siteSettings);
-        if (settings.siteName) {
-          setSiteName(settings.siteName);
+    const loadSiteSettings = () => {
+      try {
+        const siteSettings = localStorage.getItem('siteSettings');
+        if (siteSettings) {
+          const settings = JSON.parse(siteSettings);
+          if (settings.siteName) {
+            setSiteName(settings.siteName);
+          }
+        } else {
+          // If no settings exist, save the default
+          localStorage.setItem('siteSettings', JSON.stringify({ siteName: DEFAULT_SITE_NAME }));
         }
-      } else {
-        // If no settings exist, save the default
-        localStorage.setItem('siteSettings', JSON.stringify({ siteName: DEFAULT_SITE_NAME }));
+      } catch (error) {
+        console.error("Error loading site settings:", error);
       }
-    } catch (error) {
-      console.error("Error loading site settings:", error);
-    }
+    };
 
     window.addEventListener('scroll', handleScroll);
+    loadSiteSettings(); // Load settings when component mounts
     
     // Listen for storage changes
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'siteSettings') {
-        try {
-          const settings = JSON.parse(e.newValue || '{}');
-          if (settings.siteName) {
-            setSiteName(settings.siteName);
-          }
-        } catch (error) {
-          console.error("Error parsing site settings:", error);
-        }
+        loadSiteSettings();
       }
     };
     

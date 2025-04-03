@@ -34,17 +34,23 @@ const Index = () => {
     handleScroll();
     
     // Monitor localStorage changes
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'heroContent' || e.key === 'aboutContent' || e.key === 'contactContent' || e.key === 'siteSettings') {
-        setLastUpdate(Date.now());
-      }
+    const handleStorageChange = () => {
+      // Check for changes in localStorage directly
+      setLastUpdate(Date.now());
     };
     
+    // Add event listener for storage events from other tabs/windows
     window.addEventListener('storage', handleStorageChange);
+    
+    // Set up an interval to check for localStorage changes within the same tab
+    const checkInterval = setInterval(() => {
+      handleStorageChange();
+    }, 2000); // Check every 2 seconds
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('storage', handleStorageChange);
+      clearInterval(checkInterval);
     };
   }, []);
 
