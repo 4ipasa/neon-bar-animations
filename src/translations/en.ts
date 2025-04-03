@@ -1,3 +1,4 @@
+
 export const enTranslations = {
   home: "Home",
   menu: "Menu",
@@ -173,5 +174,18 @@ export const enTranslations = {
   closed: "Closed",
   opening_hours: "Opening Hours",
   tuesday_thursday: "Tuesday-Thursday",
-  friday_saturday: "Friday-Saturday"
+  friday_saturday: "Friday-Saturday",
+  
+  // About section
+  our_story: "Our Story",
+  art_of_perfect_cocktails: "The Art of Perfect Cocktails",
+  founded_story: "Founded in 2018, our bar has quickly become the go-to destination for cocktail enthusiasts and night owls alike. What started as a passion project by a group of friends has evolved into one of the city's premier drinking establishments.",
+  mixologists_blend: "Our skilled mixologists blend traditional techniques with contemporary innovation to create cocktails that are both familiar and surprising. Every ingredient is carefully selected, and every garnish meticulously placed.",
+  craft_mixology: "Craft Mixology",
+  expertly_crafted_unique: "Expertly crafted unique drinks",
+  award_winning: "Award Winning",
+  recognized_excellence: "Recognized for excellence",
+  live_music: "Live Music",
+  weekend_performances: "Weekend performances",
+  visit_us_today: "Visit us today"
 };
