@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Lock } from 'lucide-react';
 import { GradientText } from './Animations';
@@ -79,9 +78,15 @@ const Navbar: React.FC = () => {
         {/* Logo */}
         <a href="#home" className="inline-block">
           <h1 className="text-2xl font-bold">
-            <GradientText className="text-shadow-neon animate-pulse-neon">{firstPart}</GradientText>
+            <GradientText 
+              className="text-shadow-neon animate-pulse-neon tracking-tighter 
+                         bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink 
+                         bg-clip-text text-transparent"
+            >
+              {firstPart}
+            </GradientText>
             {restParts && (
-              <span className="ml-1 font-light">{restParts}</span>
+              <span className="ml-1 font-light text-white/80">{restParts}</span>
             )}
           </h1>
         </a>
